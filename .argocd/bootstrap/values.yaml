@@ -1,0 +1,23 @@
+project:
+
+  # Name of the project: lowercase whithout spaces (kebab-case)
+  name: donald-trump-charley
+  description: "Donald Trump Shiny App - Charley Geoffroy"
+
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+  - https://github.com/charley04310/Donald-Trump-Tweets-Tools
+
+  # Only permit applications to deploy to specific namespace in the same cluster
+  destinations:
+  - server: https://kubernetes.default.svc
+    name: default
+    namespace: '*'
+
+bootstrap:
+  # Name of the bootstrap: app of apps
+  name: donald-trump-bootstrap-charley
+  namespace: argocd
+  repoURL: https://github.com/charley04310/Donald-Trump-Tweets-Tools
+  path: .argocd/apps
+  server: https://kubernetes.default.svc

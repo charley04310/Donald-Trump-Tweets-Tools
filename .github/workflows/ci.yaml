@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-push-images:
+    name: Build and publish image Frontend
+    runs-on: ubuntu-latest
+    steps:
+    - id: commit
+      uses: pr-mpt/actions-commit-hash@v2
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    ## FRONTEND
+    - name: Build and push frontend
+      uses: docker/build-push-action@v4
+      with:
+        context: frontend
+        dockerfile: Dockerfile
+        push: true
+        tags: lamenace90/donald-trump-app:${{ steps.commit.outputs.short }}
+
+    - name: Update tag version frontend
+      run: "git_hash=${{ steps.commit.outputs.short }}\nversion=$(cat frontend/.helm/donald-trump-app/values.yaml | grep tag: | awk '{print $2}')\nsed -i \"s|$version|'${git_hash}'|\" frontend/.helm/donald-trump-app/values.yaml \n"
+
+    ## COMMIT CHANGE
+    - name: Commit and push changes
+      uses: devops-infra/action-commit-push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: "CI(Update): values charts -> tag"

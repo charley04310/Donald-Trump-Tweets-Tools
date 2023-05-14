@@ -1,0 +1,15 @@
+#
+ProjectName: donald-trump-charley
+
+#
+applications:
+- name: donald-trump-charley
+  namespace: charley
+  repoURL: https://github.com/charley04310/Donald-Trump-Tweets-Tools
+  chart: .helm/portfolio
+  server: https://kubernetes.default.svc
+- name: donald-trump-frontend-charley
+  namespace: charley
+  repoURL: https://github.com/charley04310/Donald-Trump-Tweets-Tools
+  chart: frontend/.helm/donald-trump-app
+  server: https://kubernetes.default.svc
