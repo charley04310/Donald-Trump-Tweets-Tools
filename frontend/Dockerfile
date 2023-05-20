@@ -1,39 +1,25 @@
-FROM rocker/shiny:4.0.5
+# Use the official R base image
+FROM r-base
 
-# Install system requirements for index.R as needed
+# Set the working directory to /app
+WORKDIR /app
+
+# Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
-    --no-install-recommends \
-    git-core \
     libssl-dev \
-    libcurl4-gnutls-dev \
-    curl \
-    libsodium-dev \
-    libxml2-dev \
-    libicu-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    libcurl4-openssl-dev \
+    libxml2-dev
 
-ENV _R_SHLIB_STRIP_=true
+# Install required R packages
+RUN R -e "install.packages(c('shiny', 'shinydashboard', 'tidyverse', 'tidytext', 'here'), repos='http://cran.rstudio.com/')"
 
-COPY ./* /etc/R
+# Copy the app files to the container image
+COPY app.r /app/app.r
 
-RUN install2.r --error --skipinstalled \
-    shiny \
-    forecast \
-    jsonlite \
-    ggplot2 \
-    htmltools \
-    plotly \
-    shinydashboard \
-    tidytext \
-    tidyverse \
-    here 
+COPY data/tweets.csv /app/data/tweets.csv
 
-COPY ./* /srv/shiny-server/
-
-USER shiny
-
+# Expose port 3838 for the Shiny app
 EXPOSE 3838
 
-CMD ["/usr/bin/shiny-server"]
-
+# Run the Shiny app
+CMD ["R", "-e", "shiny::runApp('/app/app.r', host='0.0.0.0', port=3838)"]

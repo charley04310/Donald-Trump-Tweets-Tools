@@ -19,8 +19,8 @@ library(tidytext)
 library(here)
 
 # Charger les données des tweets
-# tweets <- read.csv(file = here("data", "tweets.csv"))
-tweets <- read.csv(file = "data/tweets.csv")
+ tweets <- read.csv(file = here("data", "tweets.csv"))
+# tweets <- read.csv(file = "data/tweets.csv")
 
 # script_dir <- dirname(here::here())
 # tweets <- read.csv(file = here(script_dir, "data", "tweets.csv"))
