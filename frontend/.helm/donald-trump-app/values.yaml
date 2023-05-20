@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: lamenace90/donald-trump-app
   pullPolicy: Always
-  tag: '3a8ee14'
+  tag: '88c92da'
 
 resources:
   limits:
