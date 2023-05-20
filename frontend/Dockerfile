@@ -1,30 +1,32 @@
-# Start with a base image containing R and Shiny Server
-FROM rocker/shiny:latest
+FROM rocker/shiny:4.0.5
 
-# system libraries of general use
-## install debian packages
-RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+# Install system requirements for index.R as needed
+RUN apt-get update && apt-get install -y \
+    --no-install-recommends \
+    git-core \
+    libssl-dev \
+    libcurl4-gnutls-dev \
+    curl \
+    libsodium-dev \
     libxml2-dev \
-    libcairo2-dev \
-    libsqlite3-dev \
-    libmariadbd-dev \
-    libpq-dev \
-    libssh2-1-dev \
-    unixodbc-dev \
-    libcurl4-openssl-dev \
-    libssl-dev
+    libicu-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install R packages required for your Shiny app
-RUN R -e "install.packages(c('shiny', 'tidyverse', 'shinydashboard', 'tidytext', 'here'), repos='https://cloud.r-project.org/')" 
+ENV _R_SHLIB_STRIP_=true
+COPY Rprofile.site /etc/R
+RUN install2.r --error --skipinstalled \
+    shiny \
+    forecast \
+    jsonlite \
+    ggplot2 \
+    htmltools \
+    plotly
 
+COPY ./* /srv/shiny-server/
 
-# Copy the Shiny app files to the container
-COPY . /srv/shiny-server/
+USER shiny
 
-
-
-# Expose the port that Shiny Server runs on (default is 3838)
 EXPOSE 3838
 
-# Set the command to run Shiny Server when the container starts
-CMD ["/usr/bin/shiny-server.sh"]
+CMD ["/usr/bin/shiny-server"]
