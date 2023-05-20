@@ -17,13 +17,8 @@ ENV _R_SHLIB_STRIP_=true
 
 COPY ./* /etc/R
 
-RUN install2.r --error --skipinstalled \
-    shiny \
-    forecast \
-    jsonlite \
-    ggplot2 \
-    htmltools \
-    plotly
+# Install R packages required for your Shiny app
+RUN R -e "install.packages(c('shiny', 'tidyverse', 'shinydashboard', 'tidytext', 'here'), repos='https://cloud.r-project.org/')" 
 
 COPY ./* /srv/shiny-server/
 
@@ -32,3 +27,4 @@ USER shiny
 EXPOSE 3838
 
 CMD ["/usr/bin/shiny-server"]
+
