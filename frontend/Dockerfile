@@ -17,8 +17,17 @@ ENV _R_SHLIB_STRIP_=true
 
 COPY ./* /etc/R
 
-# Install R packages required for your Shiny app
-RUN R -e "install.packages(c('shiny', 'tidyverse', 'shinydashboard', 'tidytext', 'here'), repos='https://cloud.r-project.org/')" 
+RUN install2.r --error --skipinstalled \
+    shiny \
+    forecast \
+    jsonlite \
+    ggplot2 \
+    htmltools \
+    plotly \
+    shinydashboard \
+    tidytext \
+    tidyverse \
+    here 
 
 COPY ./* /srv/shiny-server/
 
