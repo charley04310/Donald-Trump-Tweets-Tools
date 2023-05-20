@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN R -e "install.packages(c('shiny', 'shinydashboard', 'tidyverse', 'tidytext', 'here'), repos='http://cran.rstudio.com/')"
 
 # Copy the app files to the container image
-COPY app.r /app/app.r
+COPY ./app.R /app/app.R
 
 COPY data/tweets.csv /app/data/tweets.csv
 
