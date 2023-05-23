@@ -1,6 +1,6 @@
 # Shiny Application - Donald Trump Tweets
 
-This repository contains a Shiny application that provides an interface to explore and analyze the complete collection of tweets by Donald Trump. The application allows users to perform keyword-based searches across all the tweets, as well as retrieve information on the frequency of specific keywords and the number of times a word has been deleted.
+This repository contains a Shiny application that provides an interface to explore and analyze the complete collection of **tweets by Donald Trump**. The application **allows users to perform keyword-based searches** across all the tweets, as well as retrieve information on the frequency of specific keywords and the number of times a word has been deleted.
 
 [donald.cluster-2022-5.dopolytech.fr](http://donald.cluster-2022-5.dopolytech.fr/)
 
@@ -10,17 +10,42 @@ This repository contains a Shiny application that provides an interface to explo
 
 ## Table of Contents
 
+  * [Technology stack](#technology-stack)
   * [Requirements](#requirements)
   * [Features](#features)
   * [Accessing the Application](#accessing-the-application)
-  * [Run the application locally](#run-the-application-locally)
+  * [Run the application locally with docker](#run-the-application-locally-with-docker)
   * [Contributing](#contributing)
   * [License](#license)
+
+
+## Technology stack
+
+<p align="left">
+    <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="docker" width="50" height="50"/>
+    </a>
+    <a href="https://kubernetes.io" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="50" height="50"/>
+    </a>
+    <a href="https://helm.sh/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/helmsh/helmsh-icon.svg" alt="helm" width="50" height="50"/>
+    </a>
+       <a href="https://helm.sh/" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/r-project/r-project-official.svg" alt="helm" width="50" height="50"/>
+    </a>
+</p>
+
 ## Requirements
 
-Docker CLI & Docker compose
+Docker 
 
 - [Docker](https://docs.docker.com/engine/reference/commandline/cli/)
+
+Or 
+
+- [R](https://www.r-project.org/)
+- [RStudio](https://rstudio.com/)
 
 ## Features
 
@@ -37,7 +62,7 @@ The application is deployed and can be accessed at [donald.cluster-2022-5.dopoly
     <img src="frontend/img/donald-grap.png" alt="graphe donald trump" height="400">
 </p>
 
-## Run the application locally
+## Run the application locally with docker
 
 The application has been containerized using Docker for easy deployment and portability. To launch the application, follow these steps:
 
